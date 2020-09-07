@@ -1,0 +1,127 @@
+<img
+  class="logo"
+  src="https://codebrek.com/wp-content/uploads/2020/09/at.svg"
+/>
+<textarea id="artext" placeholder="اكتب النص الخاص بك"></textarea>
+<br />
+<br />
+<div class="btns">
+  <button class="btn" id="create">موافق</button>
+
+</div>
+
+<script>
+  document.getElementById("create").onclick = () => {
+    parent.postMessage({ pluginMessage: { type: "cancel" } }, "*");
+  };
+
+  document.getElementById("artext").oninput = () => {
+    const textbox = document.getElementById("artext").value;
+    const reText = reverseString(textbox);
+
+    parent.postMessage(
+      { pluginMessage: { type: "req:setText", reText, textbox } },
+      "*"
+    );
+  };
+
+  window.onmessage = (event) => {
+    let msgg = reverseString(event.data.pluginMessage);
+
+    var ms = (document.getElementById("artext").value = msgg);
+  };
+
+  function reverseString(str) {
+    var splitString = str.split(" ");
+
+    var wrds = [];
+   
+    for(wrd of splitString)
+    {
+      const IsArabic =  isArabic(wrd);
+      if (IsArabic == false) {
+        wrds.push(wrd.split("").reverse().join(""));
+        
+      }else if(IsArabic){
+        wrds.push(wrd);
+      }
+    }
+    var finaltext = wrds.reverse().toString().split(",").join(" ");
+
+    return finaltext;
+       
+  }
+
+
+  function isArabic(text) {
+    var pattern = /^[A-Za-z0-9]*$/;
+    result = pattern.test(text);
+    return result;
+}
+</script>
+
+<style>
+  body {
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+
+    direction: rtl;
+    background-image: url("https://codebrek.com/wp-content/uploads/2020/09/vfdvfvfff.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: bottom;
+  }
+
+  .logo {
+    width: 40%;
+    margin: 10px;
+  }
+
+  .btns {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    right: 10px;
+    
+  }
+  .btn {
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+
+    background-color: rgb(81, 59, 227);
+    color: aliceblue;
+    border: 1.5px solid rgb(81, 59, 227);
+    padding: 4px 10px;
+    font-size: 15px;
+    border-radius: 4px;
+    width: 100%;
+    font-family: "bahij";
+  }
+  .btn:hover {
+    background-color: rgb(0, 0, 0);
+    border: 1.5px solid #000000;
+    color: aliceblue;
+  }
+
+  .cancel {
+    background-color: transparent;
+    border: 1.5px solid #000000;
+    color: rgb(0, 0, 0);
+    background-color: rgb(255, 255, 255);
+  }
+
+  textarea {
+    border-radius: 10px;
+    padding: 10px;
+    border: none;
+    width: 100%;
+    min-height: 70%;
+    font-size: 20px;
+    background-color: whitesmoke;
+    resize: none;
+  }
+
+  input:focus,
+  textarea:focus,
+  select:focus {
+    outline: none;
+  }
+</style>
