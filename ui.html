@@ -26,9 +26,13 @@
   };
 
   window.onmessage = (event) => {
-    let msgg = reverseString(event.data.pluginMessage);
+    
 
-    var ms = (document.getElementById("artext").value = msgg);
+    let ms = document.getElementById("artext");
+
+    ms.value = reverseString(event.data.pluginMessage);
+
+
   };
 
   function reverseString(str) {

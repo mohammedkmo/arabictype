@@ -22,10 +22,10 @@ figma.ui.onmessage = (msg) => __awaiter(this, void 0, void 0, function* () {
     // One way of distinguishing between different types of messages sent from
     // your HTML page is to use an object with a "type" property like this.
     if (msg.type === 'req:setText') {
-        const selections = figma.currentPage.selection['0'];
+        let selections = figma.currentPage.selection['0'];
         if (selections) {
             yield figma.loadFontAsync(selections.fontName);
-            selections.characters = msg.reText;
+            selections.characters = msg.reText.split("\n").reverse().join("\n");
             selections.name = msg.textbox;
         }
         return;

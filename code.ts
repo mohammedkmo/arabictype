@@ -18,22 +18,24 @@ figma.showUI(__html__);
 figma.ui.resize(300,400);
 
 
+
 figma.ui.onmessage = async msg => {
   // One way of distinguishing between different types of messages sent from
   // your HTML page is to use an object with a "type" property like this.
 
 
+
   if(msg.type === 'req:setText'){
 
-    const selections  = figma.currentPage.selection['0'];
+    let selections  = figma.currentPage.selection['0'];
     if(selections){
       await figma.loadFontAsync(selections.fontName as FontName)
-      selections.characters = msg.reText;
+      selections.characters = msg.reText.split("\n").reverse().join("\n");
       selections.name = msg.textbox;
     
-    
+
     }
-    return
+    return 
   }
 
   if(msg.type === 'cancel'){
@@ -46,4 +48,15 @@ figma.ui.onmessage = async msg => {
 };
 
 
-figma.ui.postMessage(figma.currentPage.selection['0'].characters);
+  
+
+  figma.ui.postMessage(
+  
+    figma.currentPage.selection['0'].characters
+   
+  
+  );
+ 
+  
+
+
